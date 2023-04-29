@@ -22,7 +22,7 @@ public class ExampleMod {
 
     public static final ResourceKey<Registry<ExampleObject>> TEST_REGISTRY_KEY = ResourceKey.createRegistryKey(ExampleMod.prefix("test_registry"));
     public static final DeferredRegister<ExampleObject> TEST_REGISTER = DeferredRegister.create(TEST_REGISTRY_KEY, ExampleMod.MODID);
-    public static final Supplier<IForgeRegistry<ExampleObject>> REGISTRY_SUPPLIER = TEST_REGISTER.makeRegistry(() -> new RegistryBuilder<ExampleObject>().hasTags().disableSync());
+    public static final Supplier<IForgeRegistry<ExampleObject>> REGISTRY_SUPPLIER = TEST_REGISTER.makeRegistry(() -> new RegistryBuilder<ExampleObject>().disableSync());
 
     public static final ResourceKey<ExampleObject> TEST_OBJECT = ResourceKey.create(TEST_REGISTRY_KEY, ExampleMod.prefix("test_object"));
 
