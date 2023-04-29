@@ -11,7 +11,7 @@ public interface ExampleObject {
 
     record ExampleBlock(Block block) implements ExampleObject {
         public static final Codec<ExampleBlock> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                BuiltInRegistries.BLOCK.byNameCodec().fieldOf("test_entry").forGetter(ExampleBlock::block)
+                BuiltInRegistries.BLOCK.byNameCodec().fieldOf("test_block").forGetter(ExampleBlock::block)
         ).apply(instance, ExampleBlock::new));
 
         @Override
@@ -22,7 +22,7 @@ public interface ExampleObject {
 
     record ExampleItem(Item item) implements ExampleObject {
         public static final Codec<ExampleItem> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                BuiltInRegistries.ITEM.byNameCodec().fieldOf("test_entry").forGetter(ExampleItem::item)
+                BuiltInRegistries.ITEM.byNameCodec().fieldOf("test_item").forGetter(ExampleItem::item)
         ).apply(instance, ExampleItem::new));
 
         @Override
@@ -39,7 +39,7 @@ public interface ExampleObject {
 
         @Override
         public ExampleType getType() {
-            return ExampleMod.ITEM.get();
+            return ExampleMod.FUSED.get();
         }
     }
 }

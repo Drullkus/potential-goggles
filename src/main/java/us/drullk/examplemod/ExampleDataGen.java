@@ -5,6 +5,7 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
@@ -17,8 +18,11 @@ public class ExampleDataGen {
     private static final RegistrySetBuilder REGISTRY_SET_BUILDER = new RegistrySetBuilder().add(ExampleMod.TEST_REGISTRY_KEY, ExampleDataGen::testGenerate);
 
     public static void testGenerate(BootstapContext<ExampleObject> context) {
-        context.register(ExampleMod.TEST_BLOCK, new ExampleObject.ExampleBlock(Blocks.DIAMOND_BLOCK));
-        context.register(ExampleMod.TEST_ITEM, new ExampleObject.ExampleItem(Items.CLAY_BALL));
+        ExampleObject.ExampleBlock block = new ExampleObject.ExampleBlock(Blocks.DIAMOND_BLOCK);
+        ExampleObject.ExampleItem item = new ExampleObject.ExampleItem(Items.CLAY_BALL);
+        context.register(ExampleMod.TEST_BLOCK, block);
+        context.register(ExampleMod.TEST_ITEM, item);
+        context.register(ResourceKey.create(ExampleMod.TEST_REGISTRY_KEY, ExampleMod.prefix("fused_wrapper")), new ExampleObject.ExampleFused(block, item));
     }
 
     public static void gatherData(GatherDataEvent event) {

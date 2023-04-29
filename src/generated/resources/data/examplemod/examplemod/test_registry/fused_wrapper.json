@@ -1,0 +1,11 @@
+{
+  "example_type": "examplemod:fused",
+  "first": {
+    "example_type": "examplemod:block",
+    "test_block": "minecraft:diamond_block"
+  },
+  "second": {
+    "example_type": "examplemod:item",
+    "test_item": "minecraft:clay_ball"
+  }
+}
