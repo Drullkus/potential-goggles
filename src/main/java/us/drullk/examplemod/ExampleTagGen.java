@@ -17,6 +17,6 @@ public class ExampleTagGen extends TagsProvider<ExampleObject> {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(EXAMPLE_TAG_KEY).add(ExampleMod.TEST_OBJECT);
+        //tag(EXAMPLE_TAG_KEY).add(ExampleMod.TEST_OBJECT);
     }
 }

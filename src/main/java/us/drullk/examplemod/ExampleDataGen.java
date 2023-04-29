@@ -5,6 +5,7 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -16,7 +17,8 @@ public class ExampleDataGen {
     private static final RegistrySetBuilder REGISTRY_SET_BUILDER = new RegistrySetBuilder().add(ExampleMod.TEST_REGISTRY_KEY, ExampleDataGen::testGenerate);
 
     public static void testGenerate(BootstapContext<ExampleObject> context) {
-        context.register(ExampleMod.TEST_OBJECT, new ExampleObject(Blocks.DIAMOND_BLOCK));
+        context.register(ExampleMod.TEST_BLOCK, new ExampleObject.ExampleBlock(Blocks.DIAMOND_BLOCK));
+        context.register(ExampleMod.TEST_ITEM, new ExampleObject.ExampleItem(Items.CLAY_BALL));
     }
 
     public static void gatherData(GatherDataEvent event) {

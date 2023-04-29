@@ -3,10 +3,43 @@ package us.drullk.examplemod;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
-public record ExampleObject(Block block) {
-    public static final Codec<ExampleObject> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            BuiltInRegistries.BLOCK.byNameCodec().fieldOf("test_entry").forGetter(ExampleObject::block)
-    ).apply(instance, ExampleObject::new));
+public interface ExampleObject {
+    ExampleType getType();
+
+    record ExampleBlock(Block block) implements ExampleObject {
+        public static final Codec<ExampleBlock> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                BuiltInRegistries.BLOCK.byNameCodec().fieldOf("test_entry").forGetter(ExampleBlock::block)
+        ).apply(instance, ExampleBlock::new));
+
+        @Override
+        public ExampleType getType() {
+            return ExampleMod.BLOCK.get();
+        }
+    }
+
+    record ExampleItem(Item item) implements ExampleObject {
+        public static final Codec<ExampleItem> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                BuiltInRegistries.ITEM.byNameCodec().fieldOf("test_entry").forGetter(ExampleItem::item)
+        ).apply(instance, ExampleItem::new));
+
+        @Override
+        public ExampleType getType() {
+            return ExampleMod.ITEM.get();
+        }
+    }
+
+    record ExampleFused(ExampleObject first, ExampleObject second) implements ExampleObject {
+        public static final Codec<ExampleFused> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                ExampleMod.DISPATCH_CODEC.fieldOf("first").forGetter(ExampleFused::first),
+                ExampleMod.DISPATCH_CODEC.fieldOf("second").forGetter(ExampleFused::second)
+        ).apply(instance, ExampleFused::new));
+
+        @Override
+        public ExampleType getType() {
+            return ExampleMod.ITEM.get();
+        }
+    }
 }
