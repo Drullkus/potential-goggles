@@ -42,6 +42,7 @@ public class ExampleMod {
     public ExampleMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        TYPE_REGISTER.register(modEventBus);
         TEST_REGISTER.register(modEventBus);
         modEventBus.addListener(ExampleMod::setRegistryDatapack);
         modEventBus.addListener(ExampleDataGen::gatherData);
