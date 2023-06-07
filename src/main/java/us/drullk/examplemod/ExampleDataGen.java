@@ -1,6 +1,5 @@
 package us.drullk.examplemod;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
@@ -29,7 +28,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ExampleDataGen {
     private static final RegistrySetBuilder REGISTRY_SET_BUILDER = new RegistrySetBuilder()
-            .add(ExampleMod.TEST_REGISTRY_KEY, ExampleDataGen::testGenerate)
+            .add(ExampleObjects.TEST_REGISTRY_KEY, ExampleDataGen::testGenerate)
             .add(Registries.NOISE, ExampleDataGen::generateNoiseParams)
             .add(Registries.NOISE_SETTINGS, ExampleDataGen::generateNoiseSettings)
             .add(Registries.WORLD_PRESET, ExampleDataGen::generateWorldPresets);
@@ -37,9 +36,9 @@ public class ExampleDataGen {
     public static void testGenerate(BootstapContext<ExampleObject> context) {
         ExampleObject.ExampleBlock block = new ExampleObject.ExampleBlock(Blocks.DIAMOND_BLOCK);
         ExampleObject.ExampleItem item = new ExampleObject.ExampleItem(Items.CLAY_BALL);
-        context.register(ExampleMod.TEST_BLOCK, block);
-        context.register(ExampleMod.TEST_ITEM, item);
-        context.register(ResourceKey.create(ExampleMod.TEST_REGISTRY_KEY, ExampleMod.prefix("fused_wrapper")), new ExampleObject.ExampleFused(block, item));
+        context.register(ExampleObjects.TEST_BLOCK, block);
+        context.register(ExampleObjects.TEST_ITEM, item);
+        context.register(ResourceKey.create(ExampleObjects.TEST_REGISTRY_KEY, ExampleMod.prefix("fused_wrapper")), new ExampleObject.ExampleFused(block, item));
     }
 
     public static void generateNoiseParams(BootstapContext<NormalNoise.NoiseParameters> context) {
@@ -79,7 +78,7 @@ public class ExampleDataGen {
                 // initial_density_without_jaggedness
                 DensityFunctions.zero(),
                 // final_density
-                finalDensity,
+                HopperStairGridDensityFunction.INSTANCE.get(),
                 // vein_toggle
                 DensityFunctions.zero(),
                 // vein_ridged
@@ -91,7 +90,8 @@ public class ExampleDataGen {
         context.register(ExampleKeys.TEST_NOISE_SETTINGS, new NoiseGeneratorSettings(
                 NoiseSettings.create(-64, 384, 1, 2),
                 Blocks.STONE.defaultBlockState(),
-                Blocks.WATER.defaultBlockState(),
+                //Blocks.WATER.defaultBlockState(),
+                Blocks.AIR.defaultBlockState(),
                 noiseRouter,
                 SurfaceRuleData.overworld(),
                 (new OverworldBiomeBuilder()).spawnTarget(),

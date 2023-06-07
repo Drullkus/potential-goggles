@@ -1,7 +1,7 @@
-// 1.19.4	2023-06-02T20:22:31.864397	Registries
+// 1.19.4	2023-06-06T17:22:47.888317	Registries
 0d29fb912255a9c2ec95288a51a57bcc7445b05a data/examplemod/examplemod/test_registry/block_wrapper.json
 47150e1c00fa04906e7e103039c38a07362c8fc0 data/examplemod/examplemod/test_registry/fused_wrapper.json
 6593fb0e6932ba9f48228f152390f16b02bacb21 data/examplemod/examplemod/test_registry/item_wrapper.json
 644a5ed87419e85f09b401d025e02f9de99ad10f data/examplemod/worldgen/noise/testing_noise.json
-3e4946765cb08aa79a21117be0115d9bbd59b78c data/examplemod/worldgen/noise_settings/testing_noise_settings.json
+f3a6dc678f311e3aaf25f2969f7dfc8ab3d89a94 data/examplemod/worldgen/noise_settings/testing_noise_settings.json
 b9f8d381a7c4219c80571a9c78ec2374c26debf9 data/examplemod/worldgen/world_preset/testing_preset.json

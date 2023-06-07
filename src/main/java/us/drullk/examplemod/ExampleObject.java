@@ -16,7 +16,7 @@ public interface ExampleObject {
 
         @Override
         public ExampleType getType() {
-            return ExampleMod.BLOCK.get();
+            return ExampleObjects.BLOCK.get();
         }
     }
 
@@ -27,19 +27,19 @@ public interface ExampleObject {
 
         @Override
         public ExampleType getType() {
-            return ExampleMod.ITEM.get();
+            return ExampleObjects.ITEM.get();
         }
     }
 
     record ExampleFused(ExampleObject first, ExampleObject second) implements ExampleObject {
         public static final Codec<ExampleFused> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                ExampleMod.DISPATCH_CODEC.fieldOf("first").forGetter(ExampleFused::first),
-                ExampleMod.DISPATCH_CODEC.fieldOf("second").forGetter(ExampleFused::second)
+                ExampleObjects.DISPATCH_CODEC.fieldOf("first").forGetter(ExampleFused::first),
+                ExampleObjects.DISPATCH_CODEC.fieldOf("second").forGetter(ExampleFused::second)
         ).apply(instance, ExampleFused::new));
 
         @Override
         public ExampleType getType() {
-            return ExampleMod.FUSED.get();
+            return ExampleObjects.FUSED.get();
         }
     }
 }

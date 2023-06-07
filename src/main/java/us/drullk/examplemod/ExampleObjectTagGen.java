@@ -9,10 +9,10 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import java.util.concurrent.CompletableFuture;
 
 public class ExampleObjectTagGen extends TagsProvider<ExampleObject> {
-    public static final TagKey<ExampleObject> EXAMPLE_TAG_KEY = TagKey.create(ExampleMod.TEST_REGISTRY_KEY, ExampleMod.prefix("test_tag"));
+    public static final TagKey<ExampleObject> EXAMPLE_TAG_KEY = TagKey.create(ExampleObjects.TEST_REGISTRY_KEY, ExampleMod.prefix("test_tag"));
 
     protected ExampleObjectTagGen(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> providerCompletableFuture, ExistingFileHelper fileHelper) {
-        super(packOutput, ExampleMod.TEST_REGISTRY_KEY, providerCompletableFuture, ExampleMod.MODID, fileHelper);
+        super(packOutput, ExampleObjects.TEST_REGISTRY_KEY, providerCompletableFuture, ExampleMod.MODID, fileHelper);
     }
 
     @Override
