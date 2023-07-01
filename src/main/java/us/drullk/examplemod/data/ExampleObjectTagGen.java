@@ -1,10 +1,13 @@
-package us.drullk.examplemod;
+package us.drullk.examplemod.data;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.TagKey;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import us.drullk.examplemod.ExampleMod;
+import us.drullk.examplemod.experimental.ExampleObject;
+import us.drullk.examplemod.content.ExampleObjects;
 
 import java.util.concurrent.CompletableFuture;
 

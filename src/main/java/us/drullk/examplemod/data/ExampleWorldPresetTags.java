@@ -1,4 +1,4 @@
-package us.drullk.examplemod;
+package us.drullk.examplemod.data;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -6,6 +6,8 @@ import net.minecraft.data.tags.WorldPresetTagsProvider;
 import net.minecraft.tags.WorldPresetTags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
+import us.drullk.examplemod.worldgen.ExampleKeys;
+import us.drullk.examplemod.ExampleMod;
 
 import java.util.concurrent.CompletableFuture;
 

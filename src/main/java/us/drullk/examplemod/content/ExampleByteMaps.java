@@ -1,4 +1,4 @@
-package us.drullk.examplemod;
+package us.drullk.examplemod.content;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
@@ -8,6 +8,8 @@ import net.minecraftforge.registries.DataPackRegistryEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
+import us.drullk.examplemod.worldgen.ByteMap;
+import us.drullk.examplemod.ExampleMod;
 
 import java.util.function.Supplier;
 

@@ -1,10 +1,11 @@
-package us.drullk.examplemod;
+package us.drullk.examplemod.experimental;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import us.drullk.examplemod.content.ExampleObjects;
 
 public interface ExampleObject {
     ExampleType getType();

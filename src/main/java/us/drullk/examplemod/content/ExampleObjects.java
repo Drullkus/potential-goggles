@@ -1,10 +1,13 @@
-package us.drullk.examplemod;
+package us.drullk.examplemod.content;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraftforge.registries.*;
+import us.drullk.examplemod.ExampleMod;
+import us.drullk.examplemod.experimental.ExampleObject;
+import us.drullk.examplemod.experimental.ExampleType;
 
 import java.util.function.Supplier;
 

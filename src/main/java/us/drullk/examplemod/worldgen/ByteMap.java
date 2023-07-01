@@ -1,4 +1,4 @@
-package us.drullk.examplemod;
+package us.drullk.examplemod.worldgen;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -7,6 +7,7 @@ import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.util.SimpleBitStorage;
 import net.minecraftforge.fml.loading.FMLPaths;
+import us.drullk.examplemod.ExampleMod;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

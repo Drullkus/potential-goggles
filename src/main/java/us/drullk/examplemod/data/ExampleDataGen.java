@@ -1,4 +1,4 @@
-package us.drullk.examplemod;
+package us.drullk.examplemod.data;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.HolderGetter;
@@ -23,6 +23,13 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import org.jetbrains.annotations.NotNull;
+import us.drullk.examplemod.*;
+import us.drullk.examplemod.content.ExampleByteMaps;
+import us.drullk.examplemod.experimental.ExampleObject;
+import us.drullk.examplemod.worldgen.ByteMap;
+import us.drullk.examplemod.worldgen.ExampleKeys;
+import us.drullk.examplemod.content.ExampleObjects;
+import us.drullk.examplemod.worldgen.SpriteDensityFunction;
 
 import java.util.Collections;
 import java.util.List;
@@ -163,7 +170,7 @@ public class ExampleDataGen {
         PackOutput packOutput = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-        generator.addProvider(event.includeClient(), new ExampleLocaleData(packOutput));
+        generator.addProvider(event.includeClient(), new ExampleLocale(packOutput));
         generator.addProvider(isServer, new DatapackBuiltinEntriesProvider(packOutput, lookupProvider, REGISTRY_SET_BUILDER, Collections.singleton(ExampleMod.MODID)));
         //generator.addProvider(isServer, new ExampleTagGen(packOutput, lookupProvider, event.getExistingFileHelper()));
         generator.addProvider(isServer, new ExampleWorldPresetTags(packOutput, lookupProvider, event.getExistingFileHelper()));

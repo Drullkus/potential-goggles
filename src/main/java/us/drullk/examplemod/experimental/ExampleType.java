@@ -1,4 +1,4 @@
-package us.drullk.examplemod;
+package us.drullk.examplemod.experimental;
 
 import com.mojang.serialization.Codec;
 

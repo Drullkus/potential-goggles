@@ -1,4 +1,4 @@
-package us.drullk.examplemod;
+package us.drullk.examplemod.worldgen;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;

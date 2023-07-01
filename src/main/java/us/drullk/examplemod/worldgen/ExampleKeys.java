@@ -1,10 +1,11 @@
-package us.drullk.examplemod;
+package us.drullk.examplemod.worldgen;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraft.world.level.levelgen.presets.WorldPreset;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
+import us.drullk.examplemod.ExampleMod;
 
 public class ExampleKeys {
     public static final ResourceKey<WorldPreset> TEST_PRESET = ResourceKey.create(Registries.WORLD_PRESET, ExampleMod.prefix("testing_preset"));

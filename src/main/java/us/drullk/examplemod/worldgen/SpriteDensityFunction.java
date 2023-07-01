@@ -1,4 +1,4 @@
-package us.drullk.examplemod;
+package us.drullk.examplemod.worldgen;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
@@ -8,6 +8,7 @@ import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.levelgen.DensityFunction;
+import us.drullk.examplemod.content.ExampleByteMaps;
 
 import java.util.function.Supplier;
 
