@@ -1,0 +1,11 @@
+{
+  "example_type": "potential_goggles:fused",
+  "first": {
+    "example_type": "potential_goggles:block",
+    "test_block": "minecraft:diamond_block"
+  },
+  "second": {
+    "example_type": "potential_goggles:item",
+    "test_item": "minecraft:clay_ball"
+  }
+}
