@@ -1,25 +1,23 @@
 package us.drullk.potentialgoggles.worldgen;
 
-import com.google.common.collect.Lists;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.DensityFunctions;
-import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructureStart;
-import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
-import net.minecraft.world.level.levelgen.structure.structures.EndCityPieces;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import us.drullk.potentialgoggles.PotentialGoggles;
 import us.drullk.potentialgoggles.content.GogglesByteMaps;
 import us.drullk.potentialgoggles.content.GogglesWorldgen;
 
-import java.util.List;
 import java.util.Optional;
 
 public class ACustomStructure extends Structure implements CustomDensitySource {
@@ -37,16 +35,15 @@ public class ACustomStructure extends Structure implements CustomDensitySource {
     }
 
     @Override
-    public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext pContext) {
-        Rotation rotation = Rotation.getRandom(pContext.random());
-        BlockPos blockpos = this.getLowestYIn5by5BoxOffset7Blocks(pContext, rotation);
-        return Optional.of(new Structure.GenerationStub(blockpos, (p_227538_) -> this.generatePieces(p_227538_, blockpos, rotation, pContext)));
+    public Optional<Structure.GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
+        Mirror mirror = Util.getRandom(Mirror.values(), context.random());
+        Rotation rotation = Rotation.getRandom(context.random());
+        BlockPos blockpos = context.chunkPos().getMiddleBlockPosition(80);
+        return Optional.of(new Structure.GenerationStub(blockpos, (p_227538_) -> this.generatePieces(p_227538_, blockpos, mirror, rotation, context)));
     }
 
-    private void generatePieces(StructurePiecesBuilder pBuilder, BlockPos pStartPos, Rotation pRotation, Structure.GenerationContext pContext) {
-        List<StructurePiece> list = Lists.newArrayList();
-        EndCityPieces.startHouseTower(pContext.structureTemplateManager(), pStartPos, pRotation, list, pContext.random());
-        list.forEach(pBuilder::addPiece);
+    private void generatePieces(StructurePiecesBuilder builder, BlockPos startPos, Mirror mirror, Rotation rotation, GenerationContext context) {
+        builder.addPiece(new TestFortPiece(context.structureTemplateManager(), PotentialGoggles.prefix("test_fort"), new StructurePlaceSettings().setMirror(mirror).setRotation(rotation), startPos));
     }
 
     @Override
@@ -57,7 +54,20 @@ public class ACustomStructure extends Structure implements CustomDensitySource {
     @Override
     public DensityFunction getStructureTerraformer(ChunkPos chunkPosAt, StructureStart structurePieceSource) {
         PositionedSpriteDensityFunction imageDensity = PositionedSpriteDensityFunction.fromBox(this.imageHolder, 0, 1, structurePieceSource.getBoundingBox());
-        DensityFunction yGradientStrip = DensityFunctions.mul(DensityFunctions.yClampedGradient(64, 80, 1, 0), DensityFunctions.yClampedGradient(48, 64, 0, 1));
+        int yLevel = 80;
+        int yDepth = 8;
+        DensityFunction yGradientStrip = DensityFunctions.min(DensityFunctions.yClampedGradient(yLevel, yLevel + yDepth, 1, 0), DensityFunctions.yClampedGradient(yLevel - yDepth, yLevel, 0, 1));
         return DensityFunctions.lerp(imageDensity, DensityFunctions.constant(0), yGradientStrip);
+    }
+
+    // This override is especially important, because the bounding box determines how far the world generator will apply the above custom Terraformer
+    @Override
+    public BoundingBox adjustBoundingBox(BoundingBox boundingBox) {
+        return super.adjustBoundingBox(boundingBox).inflatedBy(32);
+    }
+
+    @Override
+    public TerrainAdjustment terrainAdaptation() {
+        return TerrainAdjustment.BEARD_THIN;
     }
 }

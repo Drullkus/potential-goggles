@@ -24,6 +24,7 @@ public class PotentialGoggles {
         ExampleObjects.TEST_REGISTER.register(modEventBus);
         GogglesWorldgen.DENSITY_FUNCTIONS.register(modEventBus);
         GogglesWorldgen.STRUCTURE_TYPES.register(modEventBus);
+        GogglesWorldgen.STRUCTURE_PIECES.register(modEventBus);
         GogglesByteMaps.BYTE_MAPS.register(modEventBus);
 
         modEventBus.addListener(ExampleObjects::setRegistryDatapack);
