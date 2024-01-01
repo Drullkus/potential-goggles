@@ -6,6 +6,7 @@ import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import us.drullk.potentialgoggles.PotentialGoggles;
+import us.drullk.potentialgoggles.worldgen.DistanceDensityFunction;
 import us.drullk.potentialgoggles.worldgen.HopperStairGridDensityFunction;
 import us.drullk.potentialgoggles.worldgen.SpriteDensityFunction;
 
@@ -14,4 +15,5 @@ public class GogglesWorldgen {
 
     public static final RegistryObject<Codec<HopperStairGridDensityFunction>> HOPPER_STAIR_GRID = DENSITY_FUNCTIONS.register("hopper_stair_grid", () -> HopperStairGridDensityFunction.CODEC);
     public static final RegistryObject<Codec<SpriteDensityFunction>> SPRITE = DENSITY_FUNCTIONS.register("sprite", () -> SpriteDensityFunction.CODEC);
+    public static final RegistryObject<Codec<DistanceDensityFunction>> DISTANCE = DENSITY_FUNCTIONS.register("distance", () -> DistanceDensityFunction.CODEC);
 }

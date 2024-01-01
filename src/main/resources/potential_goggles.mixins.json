@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "us.drullk.potentialgoggles.mixin",
+  "refmap": "potential_goggles.refmap.json",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "BeardifierMixin",
+    "DesertPyramidStructureMixin"
+  ],
+  "client": [
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
