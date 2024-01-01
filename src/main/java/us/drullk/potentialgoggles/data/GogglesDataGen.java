@@ -1,6 +1,7 @@
 package us.drullk.potentialgoggles.data;
 
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
@@ -11,6 +12,7 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.SurfaceRuleData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.block.Blocks;
@@ -19,6 +21,11 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.presets.WorldPreset;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureSet;
+import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
+import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
+import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -26,10 +33,11 @@ import org.jetbrains.annotations.NotNull;
 import us.drullk.potentialgoggles.*;
 import us.drullk.potentialgoggles.content.GogglesByteMaps;
 import us.drullk.potentialgoggles.experimental.ExampleObject;
+import us.drullk.potentialgoggles.worldgen.ACustomStructure;
 import us.drullk.potentialgoggles.worldgen.ByteMap;
 import us.drullk.potentialgoggles.worldgen.GogglesKeys;
 import us.drullk.potentialgoggles.content.ExampleObjects;
-import us.drullk.potentialgoggles.worldgen.SpriteDensityFunction;
+import us.drullk.potentialgoggles.worldgen.TilingSpriteDensityFunction;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,7 +50,9 @@ public class GogglesDataGen {
             .add(GogglesByteMaps.BYTE_MAP_REGISTRY_KEY, GogglesDataGen::generateByteMaps)
             .add(Registries.NOISE, GogglesDataGen::generateNoiseParams)
             .add(Registries.NOISE_SETTINGS, GogglesDataGen::generateNoiseSettings)
-            .add(Registries.WORLD_PRESET, GogglesDataGen::generateWorldPresets);
+            .add(Registries.WORLD_PRESET, GogglesDataGen::generateWorldPresets)
+            .add(Registries.STRUCTURE, GogglesDataGen::generateStructureConfigs)
+            .add(Registries.STRUCTURE_SET, GogglesDataGen::generateStructureSets);
 
     public static void generateByteMaps(BootstapContext<ByteMap> context) {
         registerBytemap(context, GogglesByteMaps.DENSITY_CLAW);
@@ -132,7 +142,7 @@ public class GogglesDataGen {
 
     @NotNull
     private static DensityFunction getTerrainDensityFunction(HolderGetter<NormalNoise.NoiseParameters> noiseParameters, HolderGetter<ByteMap> byteMaps) {
-        SpriteDensityFunction spiral = new SpriteDensityFunction(byteMaps.getOrThrow(GogglesByteMaps.DENSITY_SPIRAL), 0, 0.5, 0.66f, 0.66f);
+        TilingSpriteDensityFunction spiral = new TilingSpriteDensityFunction(byteMaps.getOrThrow(GogglesByteMaps.DENSITY_SPIRAL), 0, 0.5, 0.66f, 0.66f);
         DensityFunction verticalGradient = DensityFunctions.yClampedGradient(-16, 128, 2, -2);
 
         DensityFunction smallNoise = DensityFunctions.mul(DensityFunctions.noise(noiseParameters.getOrThrow(GogglesKeys.TEST_NOISE_PARAMS), 0.0625f, 0.0625f), DensityFunctions.constant(0.05f));
@@ -162,6 +172,21 @@ public class GogglesDataGen {
                 LevelStem.NETHER, new LevelStem(dimensionTypes.getOrThrow(BuiltinDimensionTypes.NETHER), new NoiseBasedChunkGenerator(MultiNoiseBiomeSource.createFromPreset(biomeNoiseParameters.getOrThrow(MultiNoiseBiomeSourceParameterLists.NETHER)), noiseSettings.getOrThrow(NoiseGeneratorSettings.NETHER))),
                 LevelStem.END, new LevelStem(dimensionTypes.getOrThrow(BuiltinDimensionTypes.END), new NoiseBasedChunkGenerator(TheEndBiomeSource.create(biomes), noiseSettings.getOrThrow(NoiseGeneratorSettings.END)))
         );
+    }
+
+    private static void generateStructureConfigs(BootstapContext<Structure> context) {
+        Structure.StructureSettings settings = new Structure.StructureSettings(context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD), Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE);
+        Holder.Reference<ByteMap> imageHolder = context.lookup(GogglesByteMaps.BYTE_MAP_REGISTRY_KEY).getOrThrow(GogglesByteMaps.DENSITY_SPIRAL);
+
+        context.register(GogglesKeys.CUSTOM_STRUCTURE, new ACustomStructure(settings, imageHolder));
+    }
+
+    private static void generateStructureSets(BootstapContext<StructureSet> context) {
+        HolderGetter<Structure> structures = context.lookup(Registries.STRUCTURE);
+
+        RandomSpreadStructurePlacement placement = new RandomSpreadStructurePlacement(10, 1, RandomSpreadType.LINEAR, 0b11111101000);
+
+        context.register(GogglesKeys.CUSTOM_STRUCTURE_SET, new StructureSet(structures.getOrThrow(GogglesKeys.CUSTOM_STRUCTURE), placement));
     }
 
     public static void gatherData(GatherDataEvent event) {

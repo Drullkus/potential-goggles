@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 2024,
+    "separation": 1,
+    "spacing": 10
+  },
+  "structures": [
+    {
+      "structure": "potential_goggles:custom_structure",
+      "weight": 1
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "type": "potential_goggles:custom_structure",
+  "biomes": "#minecraft:is_overworld",
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_bytemap": "potential_goggles:density_spiral"
+}

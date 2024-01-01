@@ -12,15 +12,15 @@ import us.drullk.potentialgoggles.content.GogglesByteMaps;
 
 import java.util.function.Supplier;
 
-public class SpriteDensityFunction implements DensityFunction.SimpleFunction {
-    public static final Codec<SpriteDensityFunction> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+public class TilingSpriteDensityFunction implements DensityFunction.SimpleFunction {
+    public static final Codec<TilingSpriteDensityFunction> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             RegistryFileCodec.create(GogglesByteMaps.BYTE_MAP_REGISTRY_KEY, ByteMap.CODEC, false).fieldOf("bytemap").forGetter(f -> f.imageHolder),
-            Codec.DOUBLE.fieldOf("min_value").forGetter(SpriteDensityFunction::minValue),
-            Codec.DOUBLE.fieldOf("max_value").forGetter(SpriteDensityFunction::maxValue),
+            Codec.DOUBLE.fieldOf("min_value").forGetter(TilingSpriteDensityFunction::minValue),
+            Codec.DOUBLE.fieldOf("max_value").forGetter(TilingSpriteDensityFunction::maxValue),
             Codec.FLOAT.fieldOf("x_scalar").orElse(1f).forGetter(f -> f.xScalar),
             Codec.FLOAT.fieldOf("z_scalar").orElse(1f).forGetter(f -> f.zScalar)
-    ).apply(instance, SpriteDensityFunction::new));
-    public static final KeyDispatchDataCodec<SpriteDensityFunction> KEY_CODEC = KeyDispatchDataCodec.of(CODEC);
+    ).apply(instance, TilingSpriteDensityFunction::new));
+    public static final KeyDispatchDataCodec<TilingSpriteDensityFunction> KEY_CODEC = KeyDispatchDataCodec.of(CODEC);
 
     private final double minValue;
     private final double maxValue;
@@ -31,7 +31,7 @@ public class SpriteDensityFunction implements DensityFunction.SimpleFunction {
     private final Holder<ByteMap> imageHolder;
     private final Supplier<ByteMap> imageGetter;
 
-    public SpriteDensityFunction(Holder<ByteMap> image, double minValue, double maxValue, float xScalar, float zScalar) {
+    public TilingSpriteDensityFunction(Holder<ByteMap> image, double minValue, double maxValue, float xScalar, float zScalar) {
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.xScalar = xScalar;
