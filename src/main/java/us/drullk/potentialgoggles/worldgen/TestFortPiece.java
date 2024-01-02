@@ -59,6 +59,6 @@ public class TestFortPiece extends TemplateStructurePiece implements PieceBeardi
 
     @Override
     public int getGroundLevelDelta() {
-        return 0;
+        return 1;
     }
 }
