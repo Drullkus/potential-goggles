@@ -6,7 +6,7 @@ import net.minecraft.util.BitStorage;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.util.SimpleBitStorage;
-import net.minecraftforge.fml.loading.FMLPaths;
+import net.neoforged.fml.loading.FMLPaths;
 import us.drullk.potentialgoggles.PotentialGoggles;
 
 import javax.imageio.ImageIO;
@@ -32,14 +32,14 @@ public class ByteMap {
     public final int sizeX, sizeY;
 
     public static ByteMap initForExternalImage(String fileName) {
-        return initForExternalImage(FMLPaths.GAMEDIR.get().resolve("../bytemap_sprites/" + fileName + ".png").toFile());
+        return initForExternalImage(FMLPaths.GAMEDIR.get().resolve("../../bytemap_sprites/" + fileName + ".png").toFile());
     }
 
     public static ByteMap initForExternalImage(File file) {
         try {
             return new ByteMap(ImageIO.read(file));
         } catch (IOException e) {
-            PotentialGoggles.LOGGER.error(e);
+            PotentialGoggles.LOGGER.error("Failed to read file " + file, e);
             throw new RuntimeException(e);
         }
     }

@@ -39,7 +39,7 @@ public class TilingSpriteDensityFunction implements DensityFunction.SimpleFuncti
         this.rescale = (this.maxValue - this.minValue) / 255f;
 
         this.imageHolder = image;
-        this.imageGetter = Suppliers.memoize(this.imageHolder::get);
+        this.imageGetter = Suppliers.memoize(this.imageHolder::value);
     }
 
     @Override

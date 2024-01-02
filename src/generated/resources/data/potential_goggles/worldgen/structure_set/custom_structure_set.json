@@ -2,7 +2,7 @@
   "placement": {
     "type": "minecraft:random_spread",
     "salt": 2024,
-    "separation": 1,
+    "separation": 5,
     "spacing": 10
   },
   "structures": [

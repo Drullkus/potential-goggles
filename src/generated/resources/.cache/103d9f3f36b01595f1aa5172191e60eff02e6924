@@ -1,4 +1,4 @@
-// 1.19.4	2024-01-01T12:02:45.761394	Registries
+// 1.20.4	2024-01-02T14:52:42.805651	Registries
 8e09e6d4d4b5fac0a080a9fd89b87a4e685ab2bd data/potential_goggles/potential_goggles/byte_maps/density_claw.json
 9d6ad78fa01708d9f6f6765ad0d179f12daf3276 data/potential_goggles/potential_goggles/byte_maps/density_spiral.json
 3eec22ca247da7f508c4a7a4fc6037d86e2f9bf6 data/potential_goggles/potential_goggles/byte_maps/sequential_counting.json
@@ -8,5 +8,5 @@ ad0cf61c6857b438b21d195a5d16eb6e87df82ae data/potential_goggles/potential_goggle
 644a5ed87419e85f09b401d025e02f9de99ad10f data/potential_goggles/worldgen/noise/testing_noise.json
 bc7a3ae162fc57176dcffc701ee30888d18b953a data/potential_goggles/worldgen/noise_settings/testing_noise_settings.json
 c72bd6c1aece2b22519ce0b1cac5925cfc9f56e5 data/potential_goggles/worldgen/structure/custom_structure.json
-dbfe6c37e0c48170d01a9ff88cb07aebc7261d80 data/potential_goggles/worldgen/structure_set/custom_structure_set.json
+c4c396d8f60c2628b811bd697e32e7aa19009877 data/potential_goggles/worldgen/structure_set/custom_structure_set.json
 5392ad8825b7e4d1fa2dfbd11b95fc317eb8bfb0 data/potential_goggles/worldgen/world_preset/testing_preset.json

@@ -4,7 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.TagKey;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import us.drullk.potentialgoggles.PotentialGoggles;
 import us.drullk.potentialgoggles.experimental.ExampleObject;
 import us.drullk.potentialgoggles.content.ExampleObjects;

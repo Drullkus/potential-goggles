@@ -53,14 +53,16 @@ public class ACustomStructure extends Structure implements CustomDensitySource {
 
     @Override
     public DensityFunction getStructureTerraformer(ChunkPos chunkPosAt, StructureStart structurePieceSource) {
-        PositionedSpriteDensityFunction imageDensity = PositionedSpriteDensityFunction.fromBox(this.imageHolder, 0, 1, structurePieceSource.getBoundingBox());
+        PositionedSpriteDensityFunction imageDensity = PositionedSpriteDensityFunction.fromBox(this.imageHolder, 0, 2, structurePieceSource.getBoundingBox());
         int yLevel = 80;
-        int yDepth = 8;
-        DensityFunction yGradientStrip = DensityFunctions.min(DensityFunctions.yClampedGradient(yLevel, yLevel + yDepth, 1, 0), DensityFunctions.yClampedGradient(yLevel - yDepth, yLevel, 0, 1));
+        int yAbove = 4;
+        int yDepth = 32;
+        DensityFunction yGradientStrip = DensityFunctions.min(DensityFunctions.yClampedGradient(yLevel, yLevel + yAbove, 1, 0), DensityFunctions.yClampedGradient(yLevel - yDepth, yLevel, 0, 1));
         return DensityFunctions.lerp(imageDensity, DensityFunctions.constant(0), yGradientStrip);
     }
 
     // This override is especially important, because the bounding box determines how far the world generator will apply the above custom Terraformer
+    // Chunks not overlapping this structure will not receive any terraforming normally applied by this structure.
     @Override
     public BoundingBox adjustBoundingBox(BoundingBox boundingBox) {
         return super.adjustBoundingBox(boundingBox).inflatedBy(32);

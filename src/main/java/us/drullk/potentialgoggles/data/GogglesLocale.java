@@ -1,7 +1,7 @@
 package us.drullk.potentialgoggles.data;
 
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.common.data.LanguageProvider;
 import us.drullk.potentialgoggles.PotentialGoggles;
 
 public class GogglesLocale extends LanguageProvider {

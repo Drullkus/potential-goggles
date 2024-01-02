@@ -14,7 +14,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
-import net.minecraftforge.common.world.PieceBeardifierModifier;
+import net.neoforged.neoforge.common.world.PieceBeardifierModifier;
 import us.drullk.potentialgoggles.content.GogglesWorldgen;
 
 public class TestFortPiece extends TemplateStructurePiece implements PieceBeardifierModifier {

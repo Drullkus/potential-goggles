@@ -27,8 +27,8 @@ import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
-import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.jetbrains.annotations.NotNull;
 import us.drullk.potentialgoggles.*;
 import us.drullk.potentialgoggles.content.GogglesByteMaps;
@@ -184,7 +184,7 @@ public class GogglesDataGen {
     private static void generateStructureSets(BootstapContext<StructureSet> context) {
         HolderGetter<Structure> structures = context.lookup(Registries.STRUCTURE);
 
-        RandomSpreadStructurePlacement placement = new RandomSpreadStructurePlacement(10, 1, RandomSpreadType.LINEAR, 0b11111101000);
+        RandomSpreadStructurePlacement placement = new RandomSpreadStructurePlacement(10, 5, RandomSpreadType.LINEAR, 0b11111101000);
 
         context.register(GogglesKeys.CUSTOM_STRUCTURE_SET, new StructureSet(structures.getOrThrow(GogglesKeys.CUSTOM_STRUCTURE), placement));
     }
