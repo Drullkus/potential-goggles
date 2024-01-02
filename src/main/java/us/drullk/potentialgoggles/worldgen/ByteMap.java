@@ -6,6 +6,7 @@ import net.minecraft.util.BitStorage;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
 import net.minecraft.util.SimpleBitStorage;
+import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.fml.loading.FMLPaths;
 import us.drullk.potentialgoggles.PotentialGoggles;
 
@@ -32,6 +33,10 @@ public class ByteMap {
     public final int sizeX, sizeY;
 
     public static ByteMap initForExternalImage(String fileName) {
+        if (FMLLoader.isProduction())
+            throw new RuntimeException("This method is only permitted in-dev!");
+
+        // Looks in the root dir for this IDE project (exits /potential-goggles/runs/data/ into the main /potential-goggles/ directory)
         return initForExternalImage(FMLPaths.GAMEDIR.get().resolve("../../bytemap_sprites/" + fileName + ".png").toFile());
     }
 
