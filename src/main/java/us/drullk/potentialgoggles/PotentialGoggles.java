@@ -9,6 +9,7 @@ import us.drullk.potentialgoggles.content.GogglesByteMaps;
 import us.drullk.potentialgoggles.content.GogglesWorldgen;
 import us.drullk.potentialgoggles.data.GogglesDataGen;
 import us.drullk.potentialgoggles.content.ExampleObjects;
+import us.drullk.potentialgoggles.worldgen.CustomChunkStatus;
 
 @Mod(PotentialGoggles.MODID)
 public class PotentialGoggles {
@@ -16,6 +17,8 @@ public class PotentialGoggles {
     public static final Logger LOGGER = LogManager.getLogger();
 
     public PotentialGoggles(IEventBus modEventBus) {
+        CustomChunkStatus.init();
+
         ExampleObjects.TYPE_REGISTER.register(modEventBus);
         ExampleObjects.TEST_REGISTER.register(modEventBus);
         GogglesWorldgen.DENSITY_FUNCTIONS.register(modEventBus);
