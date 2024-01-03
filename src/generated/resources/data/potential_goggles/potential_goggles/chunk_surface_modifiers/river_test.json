@@ -1,0 +1,11 @@
+{
+  "biome_filter": "#minecraft:is_river",
+  "blockstate": {
+    "type": "minecraft:simple_state_provider",
+    "state": {
+      "Name": "minecraft:glass"
+    }
+  },
+  "chunk_surface_modifier_type": "potential_goggles:prototype",
+  "height": 16
+}

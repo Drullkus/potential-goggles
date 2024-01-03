@@ -1,0 +1,11 @@
+{
+  "biome_filter": "#minecraft:stronghold_biased_to",
+  "blockstate": {
+    "type": "minecraft:simple_state_provider",
+    "state": {
+      "Name": "minecraft:red_stained_glass"
+    }
+  },
+  "chunk_surface_modifier_type": "potential_goggles:prototype",
+  "height": 32
+}

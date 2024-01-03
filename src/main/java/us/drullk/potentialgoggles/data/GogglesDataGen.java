@@ -31,6 +31,7 @@ import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.jetbrains.annotations.NotNull;
 import us.drullk.potentialgoggles.*;
+import us.drullk.potentialgoggles.content.ChunkSurfaceModifiers;
 import us.drullk.potentialgoggles.content.GogglesByteMaps;
 import us.drullk.potentialgoggles.experimental.ExampleObject;
 import us.drullk.potentialgoggles.worldgen.ACustomStructure;
@@ -46,6 +47,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class GogglesDataGen {
     private static final RegistrySetBuilder REGISTRY_SET_BUILDER = new RegistrySetBuilder()
+            .add(ChunkSurfaceModifiers.CHUNK_SURFACE_MODIFIER_REG_KEY, ChunkSurfaceModifiers::bootstrap)
             .add(ExampleObjects.TEST_REGISTRY_KEY, GogglesDataGen::testGenerate)
             .add(GogglesByteMaps.BYTE_MAP_REGISTRY_KEY, GogglesDataGen::generateByteMaps)
             .add(Registries.NOISE, GogglesDataGen::generateNoiseParams)

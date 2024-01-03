@@ -1,24 +1,35 @@
 package us.drullk.potentialgoggles.worldgen;
 
 import com.mojang.datafixers.util.Either;
-import net.minecraft.core.BlockPos;
+import it.unimi.dsi.fastutil.objects.ObjectArraySet;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ThreadedLevelLightEngine;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import us.drullk.potentialgoggles.PotentialGoggles;
+import us.drullk.potentialgoggles.content.ChunkSurfaceModifiers;
 
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class CustomChunkStatus {
     public static void init() {
@@ -52,12 +63,32 @@ public class CustomChunkStatus {
     }
 
     private static void doWork(ChunkStatus status, ServerLevel serverLevel, ChunkGenerator generator, List<ChunkAccess> chunkAccesses, ChunkAccess chunkAccess) {
-        for (int dX = 0; dX < 16; dX++) {
-            for (int dZ = 0; dZ < 16; dZ++) {
-                int y = chunkAccess.getHeight(Heightmap.Types.WORLD_SURFACE_WG, dX, dZ);
-                BlockPos chunkMiddle = chunkAccess.getPos().getBlockAt(dX, y + 20, dZ);
-                chunkAccess.setBlockState(chunkMiddle, Blocks.GLASS.defaultBlockState(), false);
-            }
+        ChunkPos chunkPos = chunkAccess.getPos();
+        WorldGenRegion worldGenRegion = new WorldGenRegion(serverLevel, chunkAccesses, status, 0);
+
+        Set<Holder<Biome>> biomesInChunk = new ObjectArraySet<>();
+
+        for (LevelChunkSection levelchunksection : worldGenRegion.getChunk(chunkPos.x, chunkPos.z).getSections()) {
+            levelchunksection.getBiomes().getAll(biomesInChunk::add);
+        }
+
+        Iterator<ChunkSurfaceModifier> modifierIterator = serverLevel
+                .registryAccess()
+                .registry(ChunkSurfaceModifiers.CHUNK_SURFACE_MODIFIER_REG_KEY)
+                .map(Registry::stream)
+                .orElseGet(Stream::empty)
+                .filter(modifier -> modifier.biomesForApplication().stream().anyMatch(biomesInChunk::contains))
+                .iterator();
+
+        XoroshiroRandomSource random = new XoroshiroRandomSource(serverLevel.getSeed());
+
+        long seed = serverLevel.getSeed() ^ Mth.getSeed(chunkPos.x, random.nextInt(256), chunkPos.z);
+
+        while (modifierIterator.hasNext()) {
+            random.setSeed(seed);
+            seed = serverLevel.getSeed() ^ random.nextLong();
+            modifierIterator.next().processChunk(random, chunkAccess);
         }
     }
+
 }
