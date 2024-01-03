@@ -2,6 +2,7 @@ package us.drullk.potentialgoggles.worldgen;
 
 import com.mojang.datafixers.util.Either;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -10,6 +11,7 @@ import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ThreadedLevelLightEngine;
 import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.util.BitStorage;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
@@ -92,13 +94,14 @@ public class CustomChunkStatus {
                 .iterator();
 
         XoroshiroRandomSource random = new XoroshiroRandomSource(serverLevel.getSeed());
+        Function<BlockPos, Holder<Biome>> biomeGetter = serverLevel.getBiomeManager()::getBiome;
 
         long seed = serverLevel.getSeed() ^ Mth.getSeed(chunkPos.x, random.nextInt(256), chunkPos.z);
 
         while (modifierIterator.hasNext()) {
             random.setSeed(seed);
             seed = serverLevel.getSeed() ^ random.nextLong();
-            modifierIterator.next().processChunk(random, chunkAccess);
+            modifierIterator.next().processChunk(random, biomeGetter, chunkAccess);
         }
     }
 

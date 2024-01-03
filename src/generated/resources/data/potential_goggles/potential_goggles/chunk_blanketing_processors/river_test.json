@@ -1,0 +1,16 @@
+{
+  "biome_filter": "#minecraft:is_river",
+  "blockstate": {
+    "type": "minecraft:simple_state_provider",
+    "state": {
+      "Name": "minecraft:blue_candle",
+      "Properties": {
+        "candles": "1",
+        "lit": "false",
+        "waterlogged": "false"
+      }
+    }
+  },
+  "chunk_blanketing_type": "potential_goggles:prototype",
+  "height": 16
+}
