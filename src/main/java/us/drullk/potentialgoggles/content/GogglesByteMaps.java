@@ -1,13 +1,11 @@
 package us.drullk.potentialgoggles.content;
 
-import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.ExtraCodecs;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import us.drullk.potentialgoggles.PotentialGoggles;
-import us.drullk.potentialgoggles.worldgen.ByteMap;
+import us.drullk.potentialgoggles.worldgen.bytemap.ByteMap;
 
 public class GogglesByteMaps {
     // TODO add types, and create one that deserializes from an image directly instead of requiring datagen

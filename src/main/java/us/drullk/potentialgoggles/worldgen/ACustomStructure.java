@@ -17,6 +17,8 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import us.drullk.potentialgoggles.PotentialGoggles;
 import us.drullk.potentialgoggles.content.GogglesByteMaps;
 import us.drullk.potentialgoggles.content.GogglesWorldgen;
+import us.drullk.potentialgoggles.worldgen.bytemap.ByteMap;
+import us.drullk.potentialgoggles.worldgen.bytemap.PositionedSpriteDensityFunction;
 
 import java.util.Optional;
 

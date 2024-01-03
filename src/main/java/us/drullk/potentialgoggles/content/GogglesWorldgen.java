@@ -9,6 +9,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import us.drullk.potentialgoggles.PotentialGoggles;
 import us.drullk.potentialgoggles.worldgen.*;
+import us.drullk.potentialgoggles.worldgen.bytemap.PositionedSpriteDensityFunction;
+import us.drullk.potentialgoggles.worldgen.bytemap.TilingSpriteDensityFunction;
 
 public class GogglesWorldgen {
     public static final DeferredRegister<Codec<? extends DensityFunction>> DENSITY_FUNCTIONS = DeferredRegister.create(Registries.DENSITY_FUNCTION_TYPE, PotentialGoggles.MODID);

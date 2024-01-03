@@ -1,4 +1,4 @@
-package us.drullk.potentialgoggles.worldgen;
+package us.drullk.potentialgoggles.worldgen.bytemap;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
@@ -8,34 +8,44 @@ import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.levelgen.DensityFunction;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import us.drullk.potentialgoggles.content.GogglesByteMaps;
 
 import java.util.function.Supplier;
 
-public class TilingSpriteDensityFunction implements DensityFunction.SimpleFunction {
-    public static final Codec<TilingSpriteDensityFunction> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+public class PositionedSpriteDensityFunction implements DensityFunction.SimpleFunction {
+    public static final Codec<PositionedSpriteDensityFunction> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             RegistryFileCodec.create(GogglesByteMaps.BYTE_MAP_REGISTRY_KEY, ByteMap.CODEC, false).fieldOf("bytemap").forGetter(f -> f.imageHolder),
-            Codec.DOUBLE.fieldOf("min_value").forGetter(TilingSpriteDensityFunction::minValue),
-            Codec.DOUBLE.fieldOf("max_value").forGetter(TilingSpriteDensityFunction::maxValue),
-            Codec.FLOAT.fieldOf("x_scalar").orElse(1f).forGetter(f -> f.xScalar),
-            Codec.FLOAT.fieldOf("z_scalar").orElse(1f).forGetter(f -> f.zScalar)
-    ).apply(instance, TilingSpriteDensityFunction::new));
-    public static final KeyDispatchDataCodec<TilingSpriteDensityFunction> KEY_CODEC = KeyDispatchDataCodec.of(CODEC);
+            Codec.DOUBLE.fieldOf("min_value").forGetter(PositionedSpriteDensityFunction::minValue),
+            Codec.DOUBLE.fieldOf("max_value").forGetter(PositionedSpriteDensityFunction::maxValue),
+            Codec.INT.fieldOf("x_min").forGetter(f -> f.xMin),
+            Codec.INT.fieldOf("z_min").forGetter(f -> f.zMin),
+            Codec.INT.fieldOf("x_max").forGetter(f -> f.xMax),
+            Codec.INT.fieldOf("z_max").forGetter(f -> f.zMax)
+    ).apply(instance, PositionedSpriteDensityFunction::new));
+    public static final KeyDispatchDataCodec<PositionedSpriteDensityFunction> KEY_CODEC = KeyDispatchDataCodec.of(CODEC);
 
     private final double minValue;
     private final double maxValue;
-    private final float xScalar;
-    private final float zScalar;
+    private final int xMin, zMin, xMax, zMax;
     private final double rescale;
 
     private final Holder<ByteMap> imageHolder;
     private final Supplier<ByteMap> imageGetter;
 
-    public TilingSpriteDensityFunction(Holder<ByteMap> image, double minValue, double maxValue, float xScalar, float zScalar) {
+    public static PositionedSpriteDensityFunction fromBox(Holder<ByteMap> image, double minValue, double maxValue, BoundingBox box) {
+        return new PositionedSpriteDensityFunction(image, minValue, maxValue, box.minX(), box.minZ(), box.maxX(), box.maxZ());
+    }
+
+    public PositionedSpriteDensityFunction(Holder<ByteMap> image, double minValue, double maxValue, int xMin, int zMin, int xMax, int zMax) {
         this.minValue = minValue;
         this.maxValue = maxValue;
-        this.xScalar = xScalar;
-        this.zScalar = zScalar;
+
+        this.xMin = xMin;
+        this.zMin = zMin;
+        this.xMax = xMax;
+        this.zMax = zMax;
+
         this.rescale = (this.maxValue - this.minValue) / 255f;
 
         this.imageHolder = image;
@@ -44,7 +54,12 @@ public class TilingSpriteDensityFunction implements DensityFunction.SimpleFuncti
 
     @Override
     public double compute(FunctionContext pContext) {
-        float pixelAt = this.linearApproximation(pContext.blockX() * this.xScalar, pContext.blockZ() * this.zScalar);
+        ByteMap byteMap = this.imageGetter.get();
+
+        float x = Mth.clampedMap(pContext.blockX(), this.xMin, this.xMax, 0, byteMap.sizeX - 1);
+        float z = Mth.clampedMap(pContext.blockZ(), this.zMin, this.zMax, 0, byteMap.sizeY - 1);
+
+        float pixelAt = this.linearApproximation(x, z);
         return this.minValue + pixelAt * this.rescale;
     }
 

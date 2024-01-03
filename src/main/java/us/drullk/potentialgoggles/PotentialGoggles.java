@@ -5,7 +5,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import us.drullk.potentialgoggles.content.ChunkSurfaceModifiers;
+import us.drullk.potentialgoggles.content.ChunkBlanketings;
 import us.drullk.potentialgoggles.content.GogglesByteMaps;
 import us.drullk.potentialgoggles.content.GogglesWorldgen;
 import us.drullk.potentialgoggles.data.GogglesDataGen;
@@ -20,8 +20,8 @@ public class PotentialGoggles {
     public PotentialGoggles(IEventBus modEventBus) {
         CustomChunkStatus.init();
 
-        ChunkSurfaceModifiers.CHUNK_SURFACE_MODIFIER_TYPES.register(modEventBus);
-        ChunkSurfaceModifiers.CHUNK_SURFACE_MODIFIERS.register(modEventBus);
+        ChunkBlanketings.CHUNK_BLANKETING_TYPES.register(modEventBus);
+        ChunkBlanketings.CHUNK_BLANKETING_PROCESSORS.register(modEventBus);
         ExampleObjects.TYPE_REGISTER.register(modEventBus);
         ExampleObjects.TEST_REGISTER.register(modEventBus);
         GogglesWorldgen.DENSITY_FUNCTIONS.register(modEventBus);
@@ -29,7 +29,7 @@ public class PotentialGoggles {
         GogglesWorldgen.STRUCTURE_PIECES.register(modEventBus);
         GogglesByteMaps.BYTE_MAPS.register(modEventBus);
 
-        modEventBus.addListener(ChunkSurfaceModifiers::setRegistryDatapack);
+        modEventBus.addListener(ChunkBlanketings::setRegistryDatapack);
         modEventBus.addListener(ExampleObjects::setRegistryDatapack);
         modEventBus.addListener(GogglesByteMaps::setRegistryDatapack);
         modEventBus.addListener(GogglesDataGen::gatherData);

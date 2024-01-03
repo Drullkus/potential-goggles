@@ -1,4 +1,4 @@
-package us.drullk.potentialgoggles.worldgen;
+package us.drullk.potentialgoggles.worldgen.bytemap;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

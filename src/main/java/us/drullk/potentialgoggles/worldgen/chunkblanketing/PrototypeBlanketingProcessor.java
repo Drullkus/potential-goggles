@@ -1,4 +1,4 @@
-package us.drullk.potentialgoggles.worldgen;
+package us.drullk.potentialgoggles.worldgen.chunkblanketing;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -8,18 +8,17 @@ import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-import us.drullk.potentialgoggles.content.ChunkSurfaceModifiers;
+import us.drullk.potentialgoggles.content.ChunkBlanketings;
 
-public record PrototypeChunkSurfaceModifier(HolderSet<Biome> biomesForApplication, BlockStateProvider blockState, int height) implements ChunkSurfaceModifier {
-    public static final Codec<PrototypeChunkSurfaceModifier> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            RegistryCodecs.homogeneousList(Registries.BIOME, false).fieldOf("biome_filter").forGetter(PrototypeChunkSurfaceModifier::biomesForApplication),
-            BlockStateProvider.CODEC.fieldOf("blockstate").forGetter(PrototypeChunkSurfaceModifier::blockState),
-            Codec.INT.fieldOf("height").forGetter(PrototypeChunkSurfaceModifier::height)
-    ).apply(inst, PrototypeChunkSurfaceModifier::new));
+public record PrototypeBlanketingProcessor(HolderSet<Biome> biomesForApplication, BlockStateProvider blockState, int height) implements ChunkBlanketingProcessor {
+    public static final Codec<PrototypeBlanketingProcessor> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+            RegistryCodecs.homogeneousList(Registries.BIOME, false).fieldOf("biome_filter").forGetter(PrototypeBlanketingProcessor::biomesForApplication),
+            BlockStateProvider.CODEC.fieldOf("blockstate").forGetter(PrototypeBlanketingProcessor::blockState),
+            Codec.INT.fieldOf("height").forGetter(PrototypeBlanketingProcessor::height)
+    ).apply(inst, PrototypeBlanketingProcessor::new));
 
     @Override
     public void processChunk(RandomSource random, ChunkAccess chunkAccess) {
@@ -33,7 +32,7 @@ public record PrototypeChunkSurfaceModifier(HolderSet<Biome> biomesForApplicatio
     }
 
     @Override
-    public ChunkSurfaceModifierType getType() {
-        return ChunkSurfaceModifiers.PROTOTYPE_MODIFIER.value();
+    public ChunkBlanketingType getType() {
+        return ChunkBlanketings.PROTOTYPE_MODIFIER.value();
     }
 }

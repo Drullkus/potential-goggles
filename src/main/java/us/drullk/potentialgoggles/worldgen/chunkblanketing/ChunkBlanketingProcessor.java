@@ -1,14 +1,14 @@
-package us.drullk.potentialgoggles.worldgen;
+package us.drullk.potentialgoggles.worldgen.chunkblanketing;
 
 import net.minecraft.core.HolderSet;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkAccess;
 
-public interface ChunkSurfaceModifier {
+public interface ChunkBlanketingProcessor {
     HolderSet<Biome> biomesForApplication();
 
     void processChunk(RandomSource random, ChunkAccess chunkAccess);
 
-    ChunkSurfaceModifierType getType();
+    ChunkBlanketingType getType();
 }
