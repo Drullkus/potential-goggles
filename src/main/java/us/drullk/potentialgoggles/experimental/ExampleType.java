@@ -1,8 +1,8 @@
 package us.drullk.potentialgoggles.experimental;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 
 @FunctionalInterface
 public interface ExampleType {
-    Codec<? extends ExampleObject> getCodec();
+    MapCodec<? extends ExampleObject> getCodec();
 }

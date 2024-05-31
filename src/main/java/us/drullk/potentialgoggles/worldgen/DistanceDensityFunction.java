@@ -1,13 +1,14 @@
 package us.drullk.potentialgoggles.worldgen;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.levelgen.DensityFunction;
 
 public record DistanceDensityFunction(float centerX, float centerY, float centerZ, float radius, float nearValue, float farValue) implements DensityFunction.SimpleFunction {
-    public static Codec<DistanceDensityFunction> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static MapCodec<DistanceDensityFunction> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Codec.FLOAT.fieldOf("x_center").orElse(0f).forGetter(f -> f.centerX),
             Codec.FLOAT.fieldOf("y_center").orElse(0f).forGetter(f -> f.centerY),
             Codec.FLOAT.fieldOf("z_center").orElse(0f).forGetter(f -> f.centerZ),

@@ -3,6 +3,7 @@ package us.drullk.potentialgoggles.hooks;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import us.drullk.potentialgoggles.worldgen.CustomDensitySource;
@@ -10,10 +11,10 @@ import us.drullk.potentialgoggles.worldgen.CustomDensitySource;
 import java.util.List;
 
 public final class BeardifierHooks {
-    public static ObjectListIterator<DensityFunction> customStructureTerrain(ChunkPos chunkPos, List<StructureStart> customDensitySources) {
+    public static ObjectListIterator<DensityFunction> customStructureTerrain(ChunkPos chunkPos, StructureManager structureManager) {
         ObjectArrayList<DensityFunction> customStructureTerraforms = new ObjectArrayList<>(10);
 
-        for (StructureStart structureStart : customDensitySources)
+        for (StructureStart structureStart : structureManager.startsForStructure(chunkPos, s -> s instanceof CustomDensitySource))
             if (structureStart.getStructure() instanceof CustomDensitySource customDensitySource)
                 customStructureTerraforms.add(customDensitySource.getStructureTerraformer(chunkPos, structureStart));
 

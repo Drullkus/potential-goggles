@@ -1,6 +1,7 @@
 package us.drullk.potentialgoggles.content;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -13,12 +14,12 @@ import us.drullk.potentialgoggles.worldgen.bytemap.PositionedSpriteDensityFuncti
 import us.drullk.potentialgoggles.worldgen.bytemap.TilingSpriteDensityFunction;
 
 public class GogglesWorldgen {
-    public static final DeferredRegister<Codec<? extends DensityFunction>> DENSITY_FUNCTIONS = DeferredRegister.create(Registries.DENSITY_FUNCTION_TYPE, PotentialGoggles.MODID);
+    public static final DeferredRegister<MapCodec<? extends DensityFunction>> DENSITY_FUNCTIONS = DeferredRegister.create(Registries.DENSITY_FUNCTION_TYPE, PotentialGoggles.MODID);
 
-    public static final DeferredHolder<Codec<? extends DensityFunction>, Codec<HopperStairGridDensityFunction>> HOPPER_STAIR_GRID = DENSITY_FUNCTIONS.register("hopper_stair_grid", () -> HopperStairGridDensityFunction.CODEC);
-    public static final DeferredHolder<Codec<? extends DensityFunction>, Codec<TilingSpriteDensityFunction>> SPRITE = DENSITY_FUNCTIONS.register("sprite", () -> TilingSpriteDensityFunction.CODEC);
-    public static final DeferredHolder<Codec<? extends DensityFunction>, Codec<PositionedSpriteDensityFunction>> SPRITE_POS = DENSITY_FUNCTIONS.register("sprite_special", () -> PositionedSpriteDensityFunction.CODEC);
-    public static final DeferredHolder<Codec<? extends DensityFunction>, Codec<DistanceDensityFunction>> DISTANCE = DENSITY_FUNCTIONS.register("distance", () -> DistanceDensityFunction.CODEC);
+    public static final DeferredHolder<MapCodec<? extends DensityFunction>, MapCodec<HopperStairGridDensityFunction>> HOPPER_STAIR_GRID = DENSITY_FUNCTIONS.register("hopper_stair_grid", () -> HopperStairGridDensityFunction.CODEC);
+    public static final DeferredHolder<MapCodec<? extends DensityFunction>, MapCodec<TilingSpriteDensityFunction>> SPRITE = DENSITY_FUNCTIONS.register("sprite", () -> TilingSpriteDensityFunction.CODEC);
+    public static final DeferredHolder<MapCodec<? extends DensityFunction>, MapCodec<PositionedSpriteDensityFunction>> SPRITE_POS = DENSITY_FUNCTIONS.register("sprite_special", () -> PositionedSpriteDensityFunction.CODEC);
+    public static final DeferredHolder<MapCodec<? extends DensityFunction>, MapCodec<DistanceDensityFunction>> DISTANCE = DENSITY_FUNCTIONS.register("distance", () -> DistanceDensityFunction.CODEC);
 
     public static final DeferredRegister<StructureType<?>> STRUCTURE_TYPES = DeferredRegister.create(Registries.STRUCTURE_TYPE, PotentialGoggles.MODID);
 

@@ -22,7 +22,7 @@ public class BeardifierMixin {
     @Inject(method = "forStructuresInChunk", at = @At("RETURN"), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
     private static void augmentStructureTerrain(StructureManager structureManager, ChunkPos chunkPos, CallbackInfoReturnable<Beardifier> cir, int minBlockX, int minBlockZ, ObjectList<Beardifier.Rigid> pieceList, ObjectList<JigsawJunction> jigsawList) {
         Beardifier beardifier = new Beardifier(pieceList.iterator(), jigsawList.iterator());
-        ((BeardifierMixin) (Object) beardifier).customStructureDensities = BeardifierHooks.customStructureTerrain(chunkPos, structureManager.startsForStructure(chunkPos, s -> s instanceof CustomDensitySource));
+        ((BeardifierMixin) (Object) beardifier).customStructureDensities = BeardifierHooks.customStructureTerrain(chunkPos, structureManager);
         cir.setReturnValue(beardifier);
     }
 

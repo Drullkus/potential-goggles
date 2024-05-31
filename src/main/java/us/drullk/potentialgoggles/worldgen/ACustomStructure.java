@@ -1,6 +1,6 @@
 package us.drullk.potentialgoggles.worldgen;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -23,7 +23,7 @@ import us.drullk.potentialgoggles.worldgen.bytemap.PositionedSpriteDensityFuncti
 import java.util.Optional;
 
 public class ACustomStructure extends Structure implements CustomDensitySource {
-    public final static Codec<ACustomStructure> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public final static MapCodec<ACustomStructure> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Structure.settingsCodec(instance),
             RegistryFileCodec.create(GogglesByteMaps.BYTE_MAP_REGISTRY_KEY, ByteMap.CODEC, false).fieldOf("terrain_bytemap").forGetter(f -> f.imageHolder)
     ).apply(instance, ACustomStructure::new));

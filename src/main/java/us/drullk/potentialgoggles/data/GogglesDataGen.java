@@ -8,7 +8,7 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.SurfaceRuleData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -31,7 +31,6 @@ import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.jetbrains.annotations.NotNull;
 import us.drullk.potentialgoggles.*;
-import us.drullk.potentialgoggles.content.ChunkBlanketings;
 import us.drullk.potentialgoggles.content.GogglesByteMaps;
 import us.drullk.potentialgoggles.experimental.ExampleObject;
 import us.drullk.potentialgoggles.worldgen.ACustomStructure;
@@ -47,7 +46,6 @@ import java.util.concurrent.CompletableFuture;
 
 public class GogglesDataGen {
     private static final RegistrySetBuilder REGISTRY_SET_BUILDER = new RegistrySetBuilder()
-            .add(ChunkBlanketings.CHUNK_BLANKETING_REG_KEY, ChunkBlanketings::bootstrap)
             .add(ExampleObjects.TEST_REGISTRY_KEY, GogglesDataGen::testGenerate)
             .add(GogglesByteMaps.BYTE_MAP_REGISTRY_KEY, GogglesDataGen::generateByteMaps)
             .add(Registries.NOISE, GogglesDataGen::generateNoiseParams)
@@ -56,18 +54,18 @@ public class GogglesDataGen {
             .add(Registries.STRUCTURE, GogglesDataGen::generateStructureConfigs)
             .add(Registries.STRUCTURE_SET, GogglesDataGen::generateStructureSets);
 
-    public static void generateByteMaps(BootstapContext<ByteMap> context) {
+    public static void generateByteMaps(BootstrapContext<ByteMap> context) {
         registerBytemap(context, GogglesByteMaps.DENSITY_CLAW);
         registerBytemap(context, GogglesByteMaps.DENSITY_SPIRAL);
 
         context.register(GogglesByteMaps.SEQUENTIAL_COUNTING_BYTES, new ByteMap(16, 16, (x, y) -> (byte) (x + y * 16 & 0xFF)));
     }
 
-    private static void registerBytemap(BootstapContext<ByteMap> context, ResourceKey<ByteMap> bytemapKey) {
+    private static void registerBytemap(BootstrapContext<ByteMap> context, ResourceKey<ByteMap> bytemapKey) {
         context.register(bytemapKey, ByteMap.initForExternalImage(bytemapKey.location().getPath()));
     }
 
-    public static void testGenerate(BootstapContext<ExampleObject> context) {
+    public static void testGenerate(BootstrapContext<ExampleObject> context) {
         ExampleObject.ExampleBlock block = new ExampleObject.ExampleBlock(Blocks.DIAMOND_BLOCK);
         ExampleObject.ExampleItem item = new ExampleObject.ExampleItem(Items.CLAY_BALL);
         context.register(ExampleObjects.TEST_BLOCK, block);
@@ -75,11 +73,11 @@ public class GogglesDataGen {
         context.register(ResourceKey.create(ExampleObjects.TEST_REGISTRY_KEY, PotentialGoggles.prefix("fused_wrapper")), new ExampleObject.ExampleFused(block, item));
     }
 
-    public static void generateNoiseParams(BootstapContext<NormalNoise.NoiseParameters> context) {
+    public static void generateNoiseParams(BootstrapContext<NormalNoise.NoiseParameters> context) {
         context.register(GogglesKeys.TEST_NOISE_PARAMS, new NormalNoise.NoiseParameters(1, -1));
     }
 
-    public static void generateNoiseSettings(BootstapContext<NoiseGeneratorSettings> context) {
+    public static void generateNoiseSettings(BootstrapContext<NoiseGeneratorSettings> context) {
         HolderGetter<DensityFunction> densityFunctions = context.lookup(Registries.DENSITY_FUNCTION);
         HolderGetter<NormalNoise.NoiseParameters> noiseParameters = context.lookup(Registries.NOISE);
         HolderGetter<ByteMap> byteMaps = context.lookup(GogglesByteMaps.BYTE_MAP_REGISTRY_KEY);
@@ -157,11 +155,11 @@ public class GogglesDataGen {
         return DensityFunctions.add(spiral, terrain);
     }
 
-    public static void generateWorldPresets(BootstapContext<WorldPreset> context) {
+    public static void generateWorldPresets(BootstrapContext<WorldPreset> context) {
         context.register(GogglesKeys.TEST_PRESET, new WorldPreset(generatePreset(context)));
     }
 
-    private static Map<ResourceKey<LevelStem>, LevelStem> generatePreset(BootstapContext<WorldPreset> context) {
+    private static Map<ResourceKey<LevelStem>, LevelStem> generatePreset(BootstrapContext<WorldPreset> context) {
         HolderGetter<DimensionType> dimensionTypes = context.lookup(Registries.DIMENSION_TYPE);
         HolderGetter<NoiseGeneratorSettings> noiseSettings = context.lookup(Registries.NOISE_SETTINGS);
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
@@ -176,14 +174,14 @@ public class GogglesDataGen {
         );
     }
 
-    private static void generateStructureConfigs(BootstapContext<Structure> context) {
+    private static void generateStructureConfigs(BootstrapContext<Structure> context) {
         Structure.StructureSettings settings = new Structure.StructureSettings(context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD), Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE);
         Holder.Reference<ByteMap> imageHolder = context.lookup(GogglesByteMaps.BYTE_MAP_REGISTRY_KEY).getOrThrow(GogglesByteMaps.DENSITY_SPIRAL);
 
         context.register(GogglesKeys.CUSTOM_STRUCTURE, new ACustomStructure(settings, imageHolder));
     }
 
-    private static void generateStructureSets(BootstapContext<StructureSet> context) {
+    private static void generateStructureSets(BootstrapContext<StructureSet> context) {
         HolderGetter<Structure> structures = context.lookup(Registries.STRUCTURE);
 
         RandomSpreadStructurePlacement placement = new RandomSpreadStructurePlacement(10, 5, RandomSpreadType.LINEAR, 0b11111101000);

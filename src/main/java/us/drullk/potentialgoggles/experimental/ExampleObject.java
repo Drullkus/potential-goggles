@@ -1,6 +1,6 @@
 package us.drullk.potentialgoggles.experimental;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
@@ -11,7 +11,7 @@ public interface ExampleObject {
     ExampleType getType();
 
     record ExampleBlock(Block block) implements ExampleObject {
-        public static final Codec<ExampleBlock> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        public static final MapCodec<ExampleBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 BuiltInRegistries.BLOCK.byNameCodec().fieldOf("test_block").forGetter(ExampleBlock::block)
         ).apply(instance, ExampleBlock::new));
 
@@ -22,7 +22,7 @@ public interface ExampleObject {
     }
 
     record ExampleItem(Item item) implements ExampleObject {
-        public static final Codec<ExampleItem> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        public static final MapCodec<ExampleItem> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 BuiltInRegistries.ITEM.byNameCodec().fieldOf("test_item").forGetter(ExampleItem::item)
         ).apply(instance, ExampleItem::new));
 
@@ -33,7 +33,7 @@ public interface ExampleObject {
     }
 
     record ExampleFused(ExampleObject first, ExampleObject second) implements ExampleObject {
-        public static final Codec<ExampleFused> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+        public static final MapCodec<ExampleFused> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
                 ExampleObjects.DISPATCH_CODEC.fieldOf("first").forGetter(ExampleFused::first),
                 ExampleObjects.DISPATCH_CODEC.fieldOf("second").forGetter(ExampleFused::second)
         ).apply(instance, ExampleFused::new));

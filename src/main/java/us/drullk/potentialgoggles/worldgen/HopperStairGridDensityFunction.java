@@ -2,6 +2,7 @@ package us.drullk.potentialgoggles.worldgen;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.levelgen.DensityFunction;
@@ -10,7 +11,7 @@ import java.util.function.Supplier;
 
 public class HopperStairGridDensityFunction implements DensityFunction.SimpleFunction {
     public static final Supplier<HopperStairGridDensityFunction> INSTANCE = Suppliers.memoize(HopperStairGridDensityFunction::new);
-    public static final Codec<HopperStairGridDensityFunction> CODEC = Codec.unit(INSTANCE);
+    public static final MapCodec<HopperStairGridDensityFunction> CODEC = MapCodec.unit(INSTANCE);
     public static final KeyDispatchDataCodec<HopperStairGridDensityFunction> KEY_CODEC = KeyDispatchDataCodec.of(CODEC);
 
     private final int size;

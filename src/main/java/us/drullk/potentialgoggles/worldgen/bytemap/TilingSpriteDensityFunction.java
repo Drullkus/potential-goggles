@@ -2,6 +2,7 @@ package us.drullk.potentialgoggles.worldgen.bytemap;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.RegistryFileCodec;
@@ -13,7 +14,7 @@ import us.drullk.potentialgoggles.content.GogglesByteMaps;
 import java.util.function.Supplier;
 
 public class TilingSpriteDensityFunction implements DensityFunction.SimpleFunction {
-    public static final Codec<TilingSpriteDensityFunction> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static final MapCodec<TilingSpriteDensityFunction> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             RegistryFileCodec.create(GogglesByteMaps.BYTE_MAP_REGISTRY_KEY, ByteMap.CODEC, false).fieldOf("bytemap").forGetter(f -> f.imageHolder),
             Codec.DOUBLE.fieldOf("min_value").forGetter(TilingSpriteDensityFunction::minValue),
             Codec.DOUBLE.fieldOf("max_value").forGetter(TilingSpriteDensityFunction::maxValue),

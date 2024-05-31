@@ -1,17 +1,19 @@
 {
-  "biome_filter": "minecraft:snowy_plains",
   "chunk_blanketing_type": "potential_goggles:glacier",
-  "glacial_blocks": {
-    "type": "minecraft:simple_state_provider",
-    "state": {
-      "Name": "minecraft:packed_ice"
-    }
-  },
-  "height": 20,
-  "top_blocks": {
-    "type": "minecraft:simple_state_provider",
-    "state": {
-      "Name": "minecraft:ice"
+  "config": {
+    "biome_filter": "minecraft:snowy_plains",
+    "glacial_blocks": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:packed_ice"
+      }
+    },
+    "height": 20,
+    "top_blocks": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:ice"
+      }
     }
   }
 }
